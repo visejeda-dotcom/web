@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuestionario - Historia de Mesopotamia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a1a1a;
+            --secondary: #D4AF37;
+            --accent: #C4976C;
+            --bg-dark: #0f0f0f;
+            --bg-card: #1a1a1a;
+            --text-light: #e8e8e8;
+            --text-muted: #b8b8b8;
+            --border: #2a2a2a;
+            --shadow: rgba(0, 0, 0, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: var(--text-light);
+            line-height: 1.7;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border-radius: 2px;
+            box-shadow: 0 20px 60px var(--shadow);
+            overflow: hidden;
+            animation: fadeIn 0.8s ease-out;
+            border: 1px solid var(--border);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        header {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: var(--secondary);
+            padding: 3.5rem 2rem 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 2px solid var(--secondary);
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect fill="rgba(212,175,55,0.03)" width="100" height="100"/><path d="M0 0L50 50L0 100" stroke="rgba(212,175,55,0.08)" stroke-width="0.5" fill="none"/><path d="M50 0L100 50L50 100" stroke="rgba(212,175,55,0.08)" stroke-width="0.5" fill="none"/></svg>');
+            opacity: 0.4;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 1;
+            color: var(--secondary);
+            text-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+            font-weight: 300;
+            opacity: 0.85;
+            position: relative;
+            z-index: 1;
+            color: var(--text-muted);
+        }
+
+        .intro {
+            padding: 2.5rem 2.5rem 2rem;
+            background: rgba(212, 175, 55, 0.05);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .intro p {
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .quiz-form {
+            padding: 2.5rem 2.5rem 3rem;
+        }
+
+        .question {
+            margin-bottom: 2.5rem;
+            padding: 2rem;
+            background: rgba(26, 26, 26, 0.6);
+            border-left: 4px solid var(--secondary);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            animation: slideIn 0.5s ease-out backwards;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--secondary);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .question:nth-child(1) { animation-delay: 0.1s; }
+        .question:nth-child(2) { animation-delay: 0.15s; }
+        .question:nth-child(3) { animation-delay: 0.2s; }
+        .question:nth-child(4) { animation-delay: 0.25s; }
+        .question:nth-child(5) { animation-delay: 0.3s; }
+
+        .question:hover {
+            background: rgba(26, 26, 26, 0.8);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.15);
+            border-left-color: var(--accent);
+        }
+
+        .question-number {
+            font-family: 'Playfair Display', serif;
+            color: var(--secondary);
+            font-size: 1.05rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        .question-text {
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .option {
+            position: relative;
+        }
+
+        .option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .option label {
+            display: block;
+            padding: 1.1rem 1.4rem;
+            background: rgba(15, 15, 15, 0.6);
+            border: 2px solid var(--border);
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            position: relative;
+            padding-left: 3.2rem;
+            color: var(--text-light);
+        }
+
+        .option label::before {
+            content: '';
+            position: absolute;
+            left: 1.4rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            background: rgba(15, 15, 15, 0.8);
+            transition: all 0.3s ease;
+        }
+
+        .option input[type="radio"]:checked + label::before {
+            background: var(--secondary);
+            border-color: var(--secondary);
+            box-shadow: inset 0 0 0 3px rgba(15, 15, 15, 0.8);
+        }
+
+        .option input[type="radio"]:checked + label {
+            border-color: var(--secondary);
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--secondary);
+        }
+
+        .option label:hover {
+            border-color: var(--accent);
+            background: rgba(196, 151, 108, 0.08);
+            transform: translateX(4px);
+        }
+
+        .submit-section {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--border);
+        }
+
+        .submit-btn {
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%);
+            color: var(--primary);
+            border: none;
+            padding: 1.2rem 4rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            text-transform: uppercase;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
+            background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .result {
+            display: none;
+            margin-top: 2rem;
+            padding: 2rem;
+            background: rgba(212, 175, 55, 0.08);
+            border-left: 4px solid var(--secondary);
+            border-radius: 2px;
+            animation: fadeIn 0.6s ease-out;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--secondary);
+        }
+
+        .result h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            font-size: 2.2rem;
+        }
+
+        .result p {
+            font-size: 1.3rem;
+            color: var(--text-muted);
+        }
+
+        .score {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin: 1rem 0;
+            text-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+        }
+
+        footer {
+            background: rgba(10, 10, 10, 0.8);
+            color: var(--text-muted);
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 1rem;
+            opacity: 0.9;
+            border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.4rem;
+            }
+
+            .question {
+                padding: 1.5rem;
+            }
+
+            .question-text {
+                font-size: 1.25rem;
+            }
+
+            .option label {
+                font-size: 1.1rem;
+                padding: 1rem 1.1rem;
+                padding-left: 3rem;
+            }
+
+            .submit-btn {
+                padding: 1.1rem 3rem;
+                font-size: 1.1rem;
+            }
+            
+            .score {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Historia de Mesopotamia</h1>
+            <p class="subtitle">Cuestionario de Conocimientos</p>
+        </header>
+
+        <div class="intro">
+            <p>Evalúa tus conocimientos sobre la civilización mesopotámica, una de las más antiguas e influyentes de la humanidad. Responde cuidadosamente cada pregunta y pon a prueba tu sabiduría histórica.</p>
+        </div>
+
+        <form class="quiz-form" id="quizForm">
+            <!-- Pregunta 1 -->
+            <div class="question">
+                <span class="question-number">Pregunta 1</span>
+                <p class="question-text">¿Qué significa la palabra "Mesopotamia"?</p>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q1" id="q1a" value="a">
+                        <label for="q1a">Tierra de grandes montañas</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q1" id="q1b" value="b">
+                        <label for="q1b">Valle del Nilo</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q1" id="q1c" value="c">
+                        <label for="q1c">País entre ríos</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q1" id="q1d" value="d">
+                        <label for="q1d">Ciudad de los dioses</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pregunta 2 -->
+            <div class="question">
+                <span class="question-number">Pregunta 2</span>
+                <p class="question-text">¿Entre qué dos ríos se ubicaba la civilización mesopotámica?</p>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q2" id="q2a" value="a">
+                        <label for="q2a">Tigris y Éufrates</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q2" id="q2b" value="b">
+                        <label for="q2b">Nilo y Jordán</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q2" id="q2c" value="c">
+                        <label for="q2c">Indo y Ganges</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q2" id="q2d" value="d">
+                        <label for="q2d">Yangtsé y Amarillo</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pregunta 3 -->
+            <div class="question">
+                <span class="question-number">Pregunta 3</span>
+                <p class="question-text">¿Cuál fue el primer pueblo que se estableció en Mesopotamia aproximadamente en el 3.500 a.C.?</p>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q3" id="q3a" value="a">
+                        <label for="q3a">Babilonios</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q3" id="q3b" value="b">
+                        <label for="q3b">Asirios</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q3" id="q3c" value="c">
+                        <label for="q3c">Acadios</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q3" id="q3d" value="d">
+                        <label for="q3d">Sumerios</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pregunta 4 -->
+            <div class="question">
+                <span class="question-number">Pregunta 4</span>
+                <p class="question-text">¿Qué característica define a las civilizaciones fluviales como Mesopotamia?</p>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q4" id="q4a" value="a">
+                        <label for="q4a">Se establecieron en zonas desérticas</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q4" id="q4b" value="b">
+                        <label for="q4b">Se establecieron en llanuras fértiles regadas por grandes ríos</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q4" id="q4c" value="c">
+                        <label for="q4c">Se establecieron en islas del Mediterráneo</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q4" id="q4d" value="d">
+                        <label for="q4d">Se establecieron en zonas montañosas</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pregunta 5 -->
+            <div class="question">
+                <span class="question-number">Pregunta 5</span>
+                <p class="question-text">¿Qué tipo de obras hidráulicas construyeron los mesopotámicos para desarrollar la agricultura?</p>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q5" id="q5a" value="a">
+                        <label for="q5a">Pirámides y templos</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q5" id="q5b" value="b">
+                        <label for="q5b">Puentes y carreteras</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q5" id="q5c" value="c">
+                        <label for="q5c">Embalses, acueductos y canales de regadío</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q5" id="q5d" value="d">
+                        <label for="q5d">Murallas defensivas</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pregunta 6 -->
+            <div class="question">
+                <span class="question-number">Pregunta 6</span>
+                <p class="question-text">¿Qué tipo de sociedad desarrollaron las civilizaciones mesopotámicas?</p>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q6" id="q6a" value="a">
+                        <label for="q6a">Sociedades jerarquizadas y estratificadas en estamentos</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q6" id="q6b" value="b">
+                        <label for="q6b">Sociedades igualitarias sin clases</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q6" id="q6c" value="c">
+                        <label for="q6c">Sociedades nómadas sin estructura fija</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q6" id="q6d" value="d">
+                        <label for="q6d">Sociedades democráticas</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pregunta 7 -->
+            <div class="question">
+                <span class="question-number">Pregunta 7</span>
+                <p class="question-text">Los asirios, que dominaron Mesopotamia entre 1.800-600 a.C., fueron gobernados por:</p>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q7" id="q7a" value="a">
+                        <label for="q7a">Hammurabi</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q7" id="q7b" value="b">
+                        <label for="q7b">Ciro el Grande</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q7" id="q7c" value="c">
+                        <label for="q7c">Nabucodonosor</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q7" id="q7d" value="d">
+                        <label for="q7d">Assurbanipal II</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pregunta 8 -->
+            <div class="question">
+                <span class="question-number">Pregunta 8</span>
+                <p class="question-text">¿En qué año cayó Nínive, la capital asiria?</p>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q8" id="q8a" value="a">
+                        <label for="q8a">3.500 a.C.</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q8" id="q8b" value="b">
+                        <label for="q8b">1.800 a.C.</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q8" id="q8c" value="c">
+                        <label for="q8c">612 a.C.</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q8" id="q8d" value="d">
+                        <label for="q8d">539 a.C.</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pregunta 9 -->
+            <div class="question">
+                <span class="question-number">Pregunta 9</span>
+                <p class="question-text">¿Cómo se llamaban las escuelas en Mesopotamia?</p>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q9" id="q9a" value="a">
+                        <label for="q9a">Academia</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q9" id="q9b" value="b">
+                        <label for="q9b">Liceo</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q9" id="q9c" value="c">
+                        <label for="q9c">Gimnasio</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q9" id="q9d" value="d">
+                        <label for="q9d">Bit tuppi (casa de la tablilla)</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pregunta 10 -->
+            <div class="question">
+                <span class="question-number">Pregunta 10</span>
+                <p class="question-text">Hasta los diez años (edad adulta), ¿quién educaba a los niños y niñas?</p>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q10" id="q10a" value="a">
+                        <label for="q10a">Los sacerdotes</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q10" id="q10b" value="b">
+                        <label for="q10b">Los escribas</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q10" id="q10c" value="c">
+                        <label for="q10c">Sus madres</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q10" id="q10d" value="d">
+                        <label for="q10d">El Estado</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pregunta 11 -->
+            <div class="question">
+                <span class="question-number">Pregunta 11</span>
+                <p class="question-text">¿Quién era el dios patrón de Babilonia, cuya sacerdotisa era la máxima aspiración religiosa de las niñas?</p>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q11" id="q11a" value="a">
+                        <label for="q11a">Marduk</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q11" id="q11b" value="b">
+                        <label for="q11b">Ishtar</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q11" id="q11c" value="c">
+                        <label for="q11c">Enlil</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q11" id="q11d" value="d">
+                        <label for="q11d">Shamash</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pregunta 12 -->
+            <div class="question">
+                <span class="question-number">Pregunta 12</span>
+                <p class="question-text">¿Dónde nació la escritura en Mesopotamia?</p>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q12" id="q12a" value="a">
+                        <label for="q12a">En los palacios reales</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q12" id="q12b" value="b">
+                        <label for="q12b">En las bibliotecas</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q12" id="q12c" value="c">
+                        <label for="q12c">En las escuelas públicas</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q12" id="q12d" value="d">
+                        <label for="q12d">En los templos</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pregunta 13 -->
+            <div class="question">
+                <span class="question-number">Pregunta 13</span>
+                <p class="question-text">¿En qué ciudad se encontraba la escuela más antigua conocida, que data del 2.000 a.C.?</p>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q13" id="q13a" value="a">
+                        <label for="q13a">Babilonia</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q13" id="q13b" value="b">
+                        <label for="q13b">Mari</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q13" id="q13c" value="c">
+                        <label for="q13c">Ur</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q13" id="q13d" value="d">
+                        <label for="q13d">Nínive</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pregunta 14 -->
+            <div class="question">
+                <span class="question-number">Pregunta 14</span>
+                <p class="question-text">¿Qué materias se estudiaban en los templos mesopotámicos? (Selecciona la más completa)</p>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q14" id="q14a" value="a">
+                        <label for="q14a">Escritura, literatura, aritmética, música, geometría, astronomía y medicina</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q14" id="q14b" value="b">
+                        <label for="q14b">Solo escritura y lectura</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q14" id="q14c" value="c">
+                        <label for="q14c">Solo religión y agricultura</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q14" id="q14d" value="d">
+                        <label for="q14d">Únicamente artes marciales</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pregunta 15 -->
+            <div class="question">
+                <span class="question-number">Pregunta 15</span>
+                <p class="question-text">¿Quiénes dominaban la educación de los jóvenes ricos en Mesopotamia?</p>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q15" id="q15a" value="a">
+                        <label for="q15a">Los comerciantes</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q15" id="q15b" value="b">
+                        <label for="q15b">Los sacerdotes</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q15" id="q15c" value="c">
+                        <label for="q15c">Los guerreros</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q15" id="q15d" value="d">
+                        <label for="q15d">Los artesanos</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="submit-section">
+                <button type="submit" class="submit-btn">Evaluar Respuestas</button>
+                
+                <div class="result" id="result">
+                    <h2>Resultados del Cuestionario</h2>
+                    <p>Tu puntuación:</p>
+                    <div class="score" id="score">0/15</div>
+                    <p id="feedback"></p>
+                </div>
+            </div>
+        </form>
+
+        <footer>
+            <p>© 2026 - Cuestionario Educativo sobre Historia de Mesopotamia</p>
+        </footer>
+    </div>
+
+    <script>
+        const answers = {
+            q1: 'c',  // País entre ríos
+            q2: 'a',  // Tigris y Éufrates
+            q3: 'd',  // Sumerios
+            q4: 'b',  // Llanuras fértiles
+            q5: 'c',  // Embalses, acueductos y canales
+            q6: 'a',  // Sociedades jerarquizadas
+            q7: 'd',  // Assurbanipal II
+            q8: 'c',  // 612 a.C.
+            q9: 'd',  // Bit tuppi
+            q10: 'c', // Sus madres
+            q11: 'a', // Marduk
+            q12: 'd', // En los templos
+            q13: 'b', // Mari
+            q14: 'a', // Materias completas
+            q15: 'b'  // Los sacerdotes
+        };
+
+        document.getElementById('quizForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            let score = 0;
+            const totalQuestions = Object.keys(answers).length;
+            
+            for (let question in answers) {
+                const selected = document.querySelector(`input[name="${question}"]:checked`);
+                if (selected && selected.value === answers[question]) {
+                    score++;
+                }
+            }
+            
+            const percentage = (score / totalQuestions) * 100;
+            let feedback = '';
+            
+            if (percentage >= 90) {
+                feedback = '¡Excelente! Tienes un conocimiento sobresaliente sobre Mesopotamia.';
+            } else if (percentage >= 75) {
+                feedback = '¡Muy bien! Demuestras un buen dominio del tema.';
+            } else if (percentage >= 60) {
+                feedback = 'Buen trabajo, pero hay espacio para mejorar tu conocimiento sobre esta fascinante civilización.';
+            } else {
+                feedback = 'Te recomendamos profundizar más en el estudio de la civilización mesopotámica para fortalecer tus conocimientos.';
+            }
+            
+            document.getElementById('score').textContent = `${score}/${totalQuestions}`;
+            document.getElementById('feedback').textContent = feedback;
+            document.getElementById('result').style.display = 'block';
+            
+            // Scroll suave al resultado
+            document.getElementById('result').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center' 
+            });
+        });
+    </script>
+</body>
+</html>
